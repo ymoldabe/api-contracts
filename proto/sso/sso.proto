@@ -7,7 +7,6 @@ package user_service;
 option go_package = "gopher-market.sso.v1;ssov1";
 
 service UserManagementService {
-  rpc CreateUser(CreateUserRequest) returns (CreateUserResponse);
   rpc GetUser(GetUserRequest) returns (GetUserResponse);
 //  rpc UpdateUser(UpdateUserRequest) returns (UpdateUserResponse);
 //  rpc DeleteUser(DeleteUserRequest) returns (DeleteUserResponse);
@@ -89,7 +88,8 @@ message GetUserResponse{
 
 service AuthenticationService {
   rpc AuthenticateUser(AuthenticateUserRequest) returns (AuthenticateUserResponse);
-//  rpc ChangePassword(ChangePasswordRequest) returns (ChangePasswordResponse);
+  rpc CreateUser(CreateUserRequest) returns (CreateUserResponse);
+  //  rpc ChangePassword(ChangePasswordRequest) returns (ChangePasswordResponse);
 //  rpc ResetPassword(ResetPasswordRequest) returns (ResetPasswordResponse);
 }
 
