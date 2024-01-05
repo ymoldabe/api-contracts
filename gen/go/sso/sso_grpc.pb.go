@@ -24,11 +24,6 @@ const _ = grpc.SupportPackageIsVersion7
 type UserManagementServiceClient interface {
 	CreateUser(ctx context.Context, in *CreateUserRequest, opts ...grpc.CallOption) (*CreateUserResponse, error)
 	GetUser(ctx context.Context, in *GetUserRequest, opts ...grpc.CallOption) (*GetUserResponse, error)
-	UpdateUser(ctx context.Context, in *UpdateUserRequest, opts ...grpc.CallOption) (*UpdateUserResponse, error)
-	DeleteUser(ctx context.Context, in *DeleteUserRequest, opts ...grpc.CallOption) (*DeleteUserResponse, error)
-	ListUsers(ctx context.Context, in *ListUsersRequest, opts ...grpc.CallOption) (*ListUsersResponse, error)
-	GetUserOrders(ctx context.Context, in *GetUserOrdersRequest, opts ...grpc.CallOption) (*GetUserOrdersResponse, error)
-	SetUserRole(ctx context.Context, in *SetUserRoleRequest, opts ...grpc.CallOption) (*SetUserRoleResponse, error)
 }
 
 type userManagementServiceClient struct {
@@ -57,62 +52,12 @@ func (c *userManagementServiceClient) GetUser(ctx context.Context, in *GetUserRe
 	return out, nil
 }
 
-func (c *userManagementServiceClient) UpdateUser(ctx context.Context, in *UpdateUserRequest, opts ...grpc.CallOption) (*UpdateUserResponse, error) {
-	out := new(UpdateUserResponse)
-	err := c.cc.Invoke(ctx, "/user_service.UserManagementService/UpdateUser", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *userManagementServiceClient) DeleteUser(ctx context.Context, in *DeleteUserRequest, opts ...grpc.CallOption) (*DeleteUserResponse, error) {
-	out := new(DeleteUserResponse)
-	err := c.cc.Invoke(ctx, "/user_service.UserManagementService/DeleteUser", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *userManagementServiceClient) ListUsers(ctx context.Context, in *ListUsersRequest, opts ...grpc.CallOption) (*ListUsersResponse, error) {
-	out := new(ListUsersResponse)
-	err := c.cc.Invoke(ctx, "/user_service.UserManagementService/ListUsers", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *userManagementServiceClient) GetUserOrders(ctx context.Context, in *GetUserOrdersRequest, opts ...grpc.CallOption) (*GetUserOrdersResponse, error) {
-	out := new(GetUserOrdersResponse)
-	err := c.cc.Invoke(ctx, "/user_service.UserManagementService/GetUserOrders", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *userManagementServiceClient) SetUserRole(ctx context.Context, in *SetUserRoleRequest, opts ...grpc.CallOption) (*SetUserRoleResponse, error) {
-	out := new(SetUserRoleResponse)
-	err := c.cc.Invoke(ctx, "/user_service.UserManagementService/SetUserRole", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 // UserManagementServiceServer is the server API for UserManagementService service.
 // All implementations must embed UnimplementedUserManagementServiceServer
 // for forward compatibility
 type UserManagementServiceServer interface {
 	CreateUser(context.Context, *CreateUserRequest) (*CreateUserResponse, error)
 	GetUser(context.Context, *GetUserRequest) (*GetUserResponse, error)
-	UpdateUser(context.Context, *UpdateUserRequest) (*UpdateUserResponse, error)
-	DeleteUser(context.Context, *DeleteUserRequest) (*DeleteUserResponse, error)
-	ListUsers(context.Context, *ListUsersRequest) (*ListUsersResponse, error)
-	GetUserOrders(context.Context, *GetUserOrdersRequest) (*GetUserOrdersResponse, error)
-	SetUserRole(context.Context, *SetUserRoleRequest) (*SetUserRoleResponse, error)
 	mustEmbedUnimplementedUserManagementServiceServer()
 }
 
@@ -125,21 +70,6 @@ func (UnimplementedUserManagementServiceServer) CreateUser(context.Context, *Cre
 }
 func (UnimplementedUserManagementServiceServer) GetUser(context.Context, *GetUserRequest) (*GetUserResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetUser not implemented")
-}
-func (UnimplementedUserManagementServiceServer) UpdateUser(context.Context, *UpdateUserRequest) (*UpdateUserResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method UpdateUser not implemented")
-}
-func (UnimplementedUserManagementServiceServer) DeleteUser(context.Context, *DeleteUserRequest) (*DeleteUserResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method DeleteUser not implemented")
-}
-func (UnimplementedUserManagementServiceServer) ListUsers(context.Context, *ListUsersRequest) (*ListUsersResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method ListUsers not implemented")
-}
-func (UnimplementedUserManagementServiceServer) GetUserOrders(context.Context, *GetUserOrdersRequest) (*GetUserOrdersResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetUserOrders not implemented")
-}
-func (UnimplementedUserManagementServiceServer) SetUserRole(context.Context, *SetUserRoleRequest) (*SetUserRoleResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method SetUserRole not implemented")
 }
 func (UnimplementedUserManagementServiceServer) mustEmbedUnimplementedUserManagementServiceServer() {}
 
@@ -190,96 +120,6 @@ func _UserManagementService_GetUser_Handler(srv interface{}, ctx context.Context
 	return interceptor(ctx, in, info, handler)
 }
 
-func _UserManagementService_UpdateUser_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(UpdateUserRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(UserManagementServiceServer).UpdateUser(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/user_service.UserManagementService/UpdateUser",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(UserManagementServiceServer).UpdateUser(ctx, req.(*UpdateUserRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _UserManagementService_DeleteUser_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(DeleteUserRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(UserManagementServiceServer).DeleteUser(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/user_service.UserManagementService/DeleteUser",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(UserManagementServiceServer).DeleteUser(ctx, req.(*DeleteUserRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _UserManagementService_ListUsers_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ListUsersRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(UserManagementServiceServer).ListUsers(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/user_service.UserManagementService/ListUsers",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(UserManagementServiceServer).ListUsers(ctx, req.(*ListUsersRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _UserManagementService_GetUserOrders_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetUserOrdersRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(UserManagementServiceServer).GetUserOrders(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/user_service.UserManagementService/GetUserOrders",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(UserManagementServiceServer).GetUserOrders(ctx, req.(*GetUserOrdersRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _UserManagementService_SetUserRole_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(SetUserRoleRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(UserManagementServiceServer).SetUserRole(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/user_service.UserManagementService/SetUserRole",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(UserManagementServiceServer).SetUserRole(ctx, req.(*SetUserRoleRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 // UserManagementService_ServiceDesc is the grpc.ServiceDesc for UserManagementService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -295,26 +135,6 @@ var UserManagementService_ServiceDesc = grpc.ServiceDesc{
 			MethodName: "GetUser",
 			Handler:    _UserManagementService_GetUser_Handler,
 		},
-		{
-			MethodName: "UpdateUser",
-			Handler:    _UserManagementService_UpdateUser_Handler,
-		},
-		{
-			MethodName: "DeleteUser",
-			Handler:    _UserManagementService_DeleteUser_Handler,
-		},
-		{
-			MethodName: "ListUsers",
-			Handler:    _UserManagementService_ListUsers_Handler,
-		},
-		{
-			MethodName: "GetUserOrders",
-			Handler:    _UserManagementService_GetUserOrders_Handler,
-		},
-		{
-			MethodName: "SetUserRole",
-			Handler:    _UserManagementService_SetUserRole_Handler,
-		},
 	},
 	Streams:  []grpc.StreamDesc{},
 	Metadata: "sso/sso.proto",
@@ -325,8 +145,6 @@ var UserManagementService_ServiceDesc = grpc.ServiceDesc{
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type AuthenticationServiceClient interface {
 	AuthenticateUser(ctx context.Context, in *AuthenticateUserRequest, opts ...grpc.CallOption) (*AuthenticateUserResponse, error)
-	ChangePassword(ctx context.Context, in *ChangePasswordRequest, opts ...grpc.CallOption) (*ChangePasswordResponse, error)
-	ResetPassword(ctx context.Context, in *ResetPasswordRequest, opts ...grpc.CallOption) (*ResetPasswordResponse, error)
 }
 
 type authenticationServiceClient struct {
@@ -346,31 +164,11 @@ func (c *authenticationServiceClient) AuthenticateUser(ctx context.Context, in *
 	return out, nil
 }
 
-func (c *authenticationServiceClient) ChangePassword(ctx context.Context, in *ChangePasswordRequest, opts ...grpc.CallOption) (*ChangePasswordResponse, error) {
-	out := new(ChangePasswordResponse)
-	err := c.cc.Invoke(ctx, "/user_service.AuthenticationService/ChangePassword", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *authenticationServiceClient) ResetPassword(ctx context.Context, in *ResetPasswordRequest, opts ...grpc.CallOption) (*ResetPasswordResponse, error) {
-	out := new(ResetPasswordResponse)
-	err := c.cc.Invoke(ctx, "/user_service.AuthenticationService/ResetPassword", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 // AuthenticationServiceServer is the server API for AuthenticationService service.
 // All implementations must embed UnimplementedAuthenticationServiceServer
 // for forward compatibility
 type AuthenticationServiceServer interface {
 	AuthenticateUser(context.Context, *AuthenticateUserRequest) (*AuthenticateUserResponse, error)
-	ChangePassword(context.Context, *ChangePasswordRequest) (*ChangePasswordResponse, error)
-	ResetPassword(context.Context, *ResetPasswordRequest) (*ResetPasswordResponse, error)
 	mustEmbedUnimplementedAuthenticationServiceServer()
 }
 
@@ -380,12 +178,6 @@ type UnimplementedAuthenticationServiceServer struct {
 
 func (UnimplementedAuthenticationServiceServer) AuthenticateUser(context.Context, *AuthenticateUserRequest) (*AuthenticateUserResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AuthenticateUser not implemented")
-}
-func (UnimplementedAuthenticationServiceServer) ChangePassword(context.Context, *ChangePasswordRequest) (*ChangePasswordResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method ChangePassword not implemented")
-}
-func (UnimplementedAuthenticationServiceServer) ResetPassword(context.Context, *ResetPasswordRequest) (*ResetPasswordResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method ResetPassword not implemented")
 }
 func (UnimplementedAuthenticationServiceServer) mustEmbedUnimplementedAuthenticationServiceServer() {}
 
@@ -418,42 +210,6 @@ func _AuthenticationService_AuthenticateUser_Handler(srv interface{}, ctx contex
 	return interceptor(ctx, in, info, handler)
 }
 
-func _AuthenticationService_ChangePassword_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ChangePasswordRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(AuthenticationServiceServer).ChangePassword(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/user_service.AuthenticationService/ChangePassword",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AuthenticationServiceServer).ChangePassword(ctx, req.(*ChangePasswordRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _AuthenticationService_ResetPassword_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ResetPasswordRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(AuthenticationServiceServer).ResetPassword(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/user_service.AuthenticationService/ResetPassword",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AuthenticationServiceServer).ResetPassword(ctx, req.(*ResetPasswordRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 // AuthenticationService_ServiceDesc is the grpc.ServiceDesc for AuthenticationService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -464,137 +220,6 @@ var AuthenticationService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "AuthenticateUser",
 			Handler:    _AuthenticationService_AuthenticateUser_Handler,
-		},
-		{
-			MethodName: "ChangePassword",
-			Handler:    _AuthenticationService_ChangePassword_Handler,
-		},
-		{
-			MethodName: "ResetPassword",
-			Handler:    _AuthenticationService_ResetPassword_Handler,
-		},
-	},
-	Streams:  []grpc.StreamDesc{},
-	Metadata: "sso/sso.proto",
-}
-
-// AddressManagementServiceClient is the client API for AddressManagementService service.
-//
-// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-type AddressManagementServiceClient interface {
-	AddAddress(ctx context.Context, in *AddAddressRequest, opts ...grpc.CallOption) (*AddAddressResponse, error)
-	RemoveAddress(ctx context.Context, in *RemoveAddressRequest, opts ...grpc.CallOption) (*RemoveAddressResponse, error)
-}
-
-type addressManagementServiceClient struct {
-	cc grpc.ClientConnInterface
-}
-
-func NewAddressManagementServiceClient(cc grpc.ClientConnInterface) AddressManagementServiceClient {
-	return &addressManagementServiceClient{cc}
-}
-
-func (c *addressManagementServiceClient) AddAddress(ctx context.Context, in *AddAddressRequest, opts ...grpc.CallOption) (*AddAddressResponse, error) {
-	out := new(AddAddressResponse)
-	err := c.cc.Invoke(ctx, "/user_service.AddressManagementService/AddAddress", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *addressManagementServiceClient) RemoveAddress(ctx context.Context, in *RemoveAddressRequest, opts ...grpc.CallOption) (*RemoveAddressResponse, error) {
-	out := new(RemoveAddressResponse)
-	err := c.cc.Invoke(ctx, "/user_service.AddressManagementService/RemoveAddress", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-// AddressManagementServiceServer is the server API for AddressManagementService service.
-// All implementations must embed UnimplementedAddressManagementServiceServer
-// for forward compatibility
-type AddressManagementServiceServer interface {
-	AddAddress(context.Context, *AddAddressRequest) (*AddAddressResponse, error)
-	RemoveAddress(context.Context, *RemoveAddressRequest) (*RemoveAddressResponse, error)
-	mustEmbedUnimplementedAddressManagementServiceServer()
-}
-
-// UnimplementedAddressManagementServiceServer must be embedded to have forward compatible implementations.
-type UnimplementedAddressManagementServiceServer struct {
-}
-
-func (UnimplementedAddressManagementServiceServer) AddAddress(context.Context, *AddAddressRequest) (*AddAddressResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method AddAddress not implemented")
-}
-func (UnimplementedAddressManagementServiceServer) RemoveAddress(context.Context, *RemoveAddressRequest) (*RemoveAddressResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method RemoveAddress not implemented")
-}
-func (UnimplementedAddressManagementServiceServer) mustEmbedUnimplementedAddressManagementServiceServer() {
-}
-
-// UnsafeAddressManagementServiceServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to AddressManagementServiceServer will
-// result in compilation errors.
-type UnsafeAddressManagementServiceServer interface {
-	mustEmbedUnimplementedAddressManagementServiceServer()
-}
-
-func RegisterAddressManagementServiceServer(s grpc.ServiceRegistrar, srv AddressManagementServiceServer) {
-	s.RegisterService(&AddressManagementService_ServiceDesc, srv)
-}
-
-func _AddressManagementService_AddAddress_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(AddAddressRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(AddressManagementServiceServer).AddAddress(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/user_service.AddressManagementService/AddAddress",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AddressManagementServiceServer).AddAddress(ctx, req.(*AddAddressRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _AddressManagementService_RemoveAddress_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(RemoveAddressRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(AddressManagementServiceServer).RemoveAddress(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/user_service.AddressManagementService/RemoveAddress",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AddressManagementServiceServer).RemoveAddress(ctx, req.(*RemoveAddressRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-// AddressManagementService_ServiceDesc is the grpc.ServiceDesc for AddressManagementService service.
-// It's only intended for direct use with grpc.RegisterService,
-// and not to be introspected or modified (even as a copy)
-var AddressManagementService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "user_service.AddressManagementService",
-	HandlerType: (*AddressManagementServiceServer)(nil),
-	Methods: []grpc.MethodDesc{
-		{
-			MethodName: "AddAddress",
-			Handler:    _AddressManagementService_AddAddress_Handler,
-		},
-		{
-			MethodName: "RemoveAddress",
-			Handler:    _AddressManagementService_RemoveAddress_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
