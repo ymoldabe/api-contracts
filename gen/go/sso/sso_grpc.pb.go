@@ -22,7 +22,7 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type UserManagementServiceClient interface {
-	GetUser(ctx context.Context, in *GetUserRequest, opts ...grpc.CallOption) (*GetUserResponse, error)
+	GetUserById(ctx context.Context, in *GetUserByIdRequest, opts ...grpc.CallOption) (*GetUserByIdResponse, error)
 }
 
 type userManagementServiceClient struct {
@@ -33,9 +33,9 @@ func NewUserManagementServiceClient(cc grpc.ClientConnInterface) UserManagementS
 	return &userManagementServiceClient{cc}
 }
 
-func (c *userManagementServiceClient) GetUser(ctx context.Context, in *GetUserRequest, opts ...grpc.CallOption) (*GetUserResponse, error) {
-	out := new(GetUserResponse)
-	err := c.cc.Invoke(ctx, "/user_service.UserManagementService/GetUser", in, out, opts...)
+func (c *userManagementServiceClient) GetUserById(ctx context.Context, in *GetUserByIdRequest, opts ...grpc.CallOption) (*GetUserByIdResponse, error) {
+	out := new(GetUserByIdResponse)
+	err := c.cc.Invoke(ctx, "/user_service.UserManagementService/GetUserById", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -46,7 +46,7 @@ func (c *userManagementServiceClient) GetUser(ctx context.Context, in *GetUserRe
 // All implementations must embed UnimplementedUserManagementServiceServer
 // for forward compatibility
 type UserManagementServiceServer interface {
-	GetUser(context.Context, *GetUserRequest) (*GetUserResponse, error)
+	GetUserById(context.Context, *GetUserByIdRequest) (*GetUserByIdResponse, error)
 	mustEmbedUnimplementedUserManagementServiceServer()
 }
 
@@ -54,8 +54,8 @@ type UserManagementServiceServer interface {
 type UnimplementedUserManagementServiceServer struct {
 }
 
-func (UnimplementedUserManagementServiceServer) GetUser(context.Context, *GetUserRequest) (*GetUserResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetUser not implemented")
+func (UnimplementedUserManagementServiceServer) GetUserById(context.Context, *GetUserByIdRequest) (*GetUserByIdResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetUserById not implemented")
 }
 func (UnimplementedUserManagementServiceServer) mustEmbedUnimplementedUserManagementServiceServer() {}
 
@@ -70,20 +70,20 @@ func RegisterUserManagementServiceServer(s grpc.ServiceRegistrar, srv UserManage
 	s.RegisterService(&UserManagementService_ServiceDesc, srv)
 }
 
-func _UserManagementService_GetUser_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetUserRequest)
+func _UserManagementService_GetUserById_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetUserByIdRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(UserManagementServiceServer).GetUser(ctx, in)
+		return srv.(UserManagementServiceServer).GetUserById(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/user_service.UserManagementService/GetUser",
+		FullMethod: "/user_service.UserManagementService/GetUserById",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(UserManagementServiceServer).GetUser(ctx, req.(*GetUserRequest))
+		return srv.(UserManagementServiceServer).GetUserById(ctx, req.(*GetUserByIdRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -96,8 +96,8 @@ var UserManagementService_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*UserManagementServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "GetUser",
-			Handler:    _UserManagementService_GetUser_Handler,
+			MethodName: "GetUserById",
+			Handler:    _UserManagementService_GetUserById_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
